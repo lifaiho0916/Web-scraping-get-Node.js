@@ -40,13 +40,17 @@ const scrape = async () => {
                 }
                 const website = arr !== '' ? arr[1] ? arr[1].split("Website:")[1].trim() : '' : '';
 
+                let status = ''
                 const ele = $('tbody tr:first-child')
-                const status = ele.find('span').text() ? ele.find('span').text().trim() : '';
+                if(ele.text() !== '') {
+                    const secondTd = ele.find('td:nth-child(2)');
+                    status = secondTd.text() ? secondTd.text().trim() : '';
+                }
 
                 const ele1 = $('tbody tr:last-child')
                 const admissionDate = ele1.find('strong').text() ? ele1.find('strong').text().trim() : '';
 
-                // A[*]: No, B[*]: Number, C[*]: Name, D[*]: Address, E[*]: Phone, F[*]: Fax, G[*]: Email, H[*]: Website
+                // A[*]: No, B[*]: Number, C[*]: Name, D[*]: Address, E[*]: Phone, F[*]: Fax, G[*]: Email, H[*]: Website, I[*]: Status, J[*]: Admission Date
                 let cell = XLSX.utils.decode_cell(`A${cnt + 1}`);
                 XLSX.utils.sheet_add_aoa(worksheet, [['']], { origin: cell });
                 worksheet[`A${cnt + 1}`].v = cnt + 1;

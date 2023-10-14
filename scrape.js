@@ -47,8 +47,16 @@ const scrape = async () => {
                     status = secondTd.text() ? secondTd.text().trim() : '';
                 }
 
+                if(status !== '') {
+                    status = status.split("Case")[0].trim()
+                }
+
                 const ele1 = $('tbody tr:last-child')
-                const admissionDate = ele1.find('strong').text() ? ele1.find('strong').text().trim() : '';
+                let admissionDate = ele1.find('strong').text() ? ele1.find('strong').text().trim() : '';
+
+                if(admissionDate !== '') {
+                    admissionDate = admissionDate.split("Effective")[0].trim()
+                }
 
                 // A[*]: No, B[*]: Number, C[*]: Name, D[*]: Address, E[*]: Phone, F[*]: Fax, G[*]: Email, H[*]: Website, I[*]: Status, J[*]: Admission Date
                 let cell = XLSX.utils.decode_cell(`A${cnt + 1}`);
